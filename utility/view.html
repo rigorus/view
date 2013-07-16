@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link href="lib/video-js/video-js.css" rel="stylesheet">
+    <script type="text/javascript" src="lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="lib/video-js/video.js"></script>
+    <script type="text/javascript">
+//        $(window).ready(function(){
+//            var view = localStorage.getItem("view_window");
+//            if( view ){
+//                alert('Уже открыто');
+//                window.close();
+//            }else{
+//                localStorage.setItem("view_window",window);
+//            }
+//        });
+        videojs.options.flash.swf = "js/video-js/video-js.swf";
+
+        $(window).load(resize);
+        $(window).resize(resize);
+
+//        $(window).bind('unbound', function(){
+//            localStorage.setItem("view_window",null);
+//            alert("I'am");
+//            this.open();
+//            this.location('yandex.ru')
+            //переход на старницу напишешь сам :)
+//        });
+
+        function resize(){
+            var img = $('#image')[0];
+
+            var scaleX =$(window).width() / img.width;
+            var scaleY = $(window).height() / img.height;
+            if( scaleX > scaleY){
+                img.width = img.width * scaleY;
+                img.height =  body.clientHeight;
+            }else{
+                img.width = body.clientWidth;
+                img.height =  img.height * scaleX;
+            }
+        }
+
+    </script>
+    <style>
+        /*body {background: black;}*/
+        #image {display:block; margin:0 auto; padding: 5px 5px;}
+        #video {display:block; margin:0 auto; padding: 5px 5px;}
+    </style>
+</head>
+<body>
+
+    <!--<img id="image" alt="Лики Владык" src="image/Гаутама Будда.jpg"/>-->
+
+    <video id="video" class="video-js vjs-default-skin"
+           controls preload="auto" width="640" height="264"
+           poster="video-js/oceans-clip.png"
+           data-setup='{"example_option":true}'>
+        <source src="video/Первое интервью_cut_2.webm" type='video/webm'/>
+        <!--<source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />-->
+        <!--<source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />-->
+    </video>
+</body>
+</html>

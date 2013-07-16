@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="js/resource.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var VIEW_WINDOW = undefined;
+        $(window).ready(function(){
+//            var view = localStorage.getItem("view_window");
+//            if( !view ){
+//                VIEW_WINDOW =  window.open('view.html');
+//                VIEW_WINDOW.show();
+//            } else{
+//                VIEW_WINDOW = view;
+//            }
+
+            VIEW_WINDOW = window.open('view.html');
+        });
+
+        function image(){
+            
+        }
+
+        function action(name){
+            $('#image',VIEW_WINDOW.document.body)[0].src = 'image/Санат Кумара.jpg';
+        }
+
+
+//        globalStorage['developer.mozilla.org'].setItem("username", "John");
+
+    </script>
+
+    <input type="button" onclick="action('1')">
+</body>
+</html>
