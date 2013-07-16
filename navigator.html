@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="zoro/lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="zoro/js/utils.js"></script>
+    <script type="text/javascript" src="resource.js"></script>
+    
+        
+    <link rel="stylesheet" href="zoro/css/reset.css" >
+    <style>
+        h1{
+            margin: 5px 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        img.face{
+            margin: 5px 5px;
+            cursor: pointer;
+        }
+        /*#video {display:block; margin:0 auto; padding: 5px 5px;}*/
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        var VIEW_WINDOW = undefined;
+        $(window).ready(function(){
+//            var view = localStorage.getItem("view_window");
+//            if( !view ){
+//                VIEW_WINDOW =  window.open('view.html');
+//                VIEW_WINDOW.show();
+//            } else{
+//                VIEW_WINDOW = view;
+//            }
+
+            VIEW_WINDOW = window.open('view.html');
+            images();
+        });
+
+        function images(){
+            
+            if( !RESOURCE.image) return;
+            
+            var region = {width : 64, height : 64};
+            
+            for(var i = 0; i < RESOURCE.image.length; ++i){
+                var image = RESOURCE.image[i];
+                
+                var img = $('<img class="face"/>').
+                    attr({
+                        alt:    image.name,
+                        src:    image.src,                    
+                        width:  region.width,
+                        height: region.height,
+                    }).       
+                    data('src',image).                    
+                    click(function(){
+                        $('#image',VIEW_WINDOW.document.body)[0].src = $(this).data('src').src;
+                    }).
+                    load(function(){
+                                     
+                        var size = scale({
+                            width : this.naturalWidth, 
+                            height : this.naturalHeight
+                        },region); 
+                
+                        $(this).attr({
+                            width:  size.width,
+                            height: size.height                    
+                        });                      
+                    });
+            }            
+        }
+
+        function action(image){
+            $('#image',VIEW_WINDOW.document.body)[0].src = image.src;
+        }
+
+
+//        globalStorage['developer.mozilla.org'].setItem("username", "John");
+
+    </script>
+
+    <!--<input type="button" onclick="action('1');"/>-->
+    
+    <h1>Лики Владык</h1>
+    <div id="images"></div>
+<!--
+    <a onclick="action($(this).data('image'));">
+        <img height="48" width="48" src="../image/Санат Кумара.jpg" alt="Санат Кумара"/>
+    </a>
+    -->
+</body>
+</html>
