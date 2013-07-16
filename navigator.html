@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="z-index/lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="resource.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var VIEW_WINDOW = undefined;
+        $(window).ready(function(){
+//            var view = localStorage.getItem("view_window");
+//            if( !view ){
+//                VIEW_WINDOW =  window.open('view.html');
+//                VIEW_WINDOW.show();
+//            } else{
+//                VIEW_WINDOW = view;
+//            }
+
+//            VIEW_WINDOW = window.open('view.html');
+            images();
+        });
+
+        function images(){
+            
+            if( !RESOURCE.image) return;
+            
+            for(var i = 0; i < RESOURCE.image.length; ++i){
+                var image = RESOURCE.image[i];
+                var img = $('<img/>').attr({
+                    alt:    image.name,
+                    src:    image.src,
+                    width:  48,
+                    height: 48
+                  });
+                $('div#images').append(img);
+            }
+        }
+
+        function action(image){
+            $('#image',VIEW_WINDOW.document.body)[0].src = image.src;
+        }
+
+
+//        globalStorage['developer.mozilla.org'].setItem("username", "John");
+
+    </script>
+
+    <!--<input type="button" onclick="action('1');"/>-->
+    
+    <div id="images"></div>
+<!--
+    <a onclick="action($(this).data('image'));">
+        <img height="48" width="48" src="../image/Санат Кумара.jpg" alt="Санат Кумара"/>
+    </a>
+    -->
+</body>
+</html>
