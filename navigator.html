@@ -46,7 +46,6 @@
             if( !view ){
                 VIEW_WINDOW =  window.open('view.html');
                 sessionStorage.setItem("view_window",VIEW_WINDOW);
-//                VIEW_WINDOW.show();
             } else{
                 VIEW_WINDOW = view;
             }
@@ -92,13 +91,14 @@
             
             if( !RESOURCE.music) return;            
             
-            var play = [];
+            var playlist = [];
             
             for(var i = 0; i < RESOURCE.music.length; ++i){
                 var music = RESOURCE.music[i];
-                play.push({
+                playlist.push({
                     title: music.name,
-                    mp3: music.src
+                    mp3: music.src + '.mp3',
+                    oga: music.src + '.ogg'
                 });
             } 
             
@@ -106,9 +106,9 @@
 		jPlayer: "#jplayer",
 		cssSelectorAncestor: "#jp_container"
             }, 
-            play,{
+            playlist,{
                 swfPath: "zoro/js/jplayer",
-                supplied: "mp3",
+                supplied: "mp3, oga",
                 wmode: "window",
                 smoothPlayBar: true,
                 keyEnabled: true

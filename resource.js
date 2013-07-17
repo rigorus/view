@@ -15,9 +15,9 @@ var RESOURCE = {
         {name: 'Первое интервью', src: 'video/Первое интервью.webm'}
     ],
     music: [
-        {name: 'Sa Re Sa Sa', src: 'music/Sa Re Sa Sa.mp3'},
-        {name: 'Абардас', src: 'music/Abardas.mp3'},
-        {name: 'Kunrig', src: 'music/Kunrig.mp3'},
-        {name: 'Ом Мани Падме Хум', src: 'music/Om mani padme hum.mp3'}
+        {name: 'Sa Re Sa Sa', src: 'music/Sa Re Sa Sa'},
+        {name: 'Амардас', src: 'music/Amardas'},
+        {name: 'Kunrig', src: 'music/Kunrig'},
+        {name: 'Ом Мани Падме Хум', src: 'music/Om mani padme hum'}
     ]
 };
