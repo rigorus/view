@@ -2,12 +2,18 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript" src="zoro/lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="zoro/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="zoro/js/audiojs/audio.min.js"></script>
+    <script type="text/javascript" src="zoro/js/jplayer/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="zoro/js/jplayer/add-on/jplayer.playlist.min.js"></script>
+    <script type="text/javascript" src="zoro/js/jplayer/add-on/prettify-jPlayer.js"></script>
     <script type="text/javascript" src="zoro/js/utils.js"></script>
     <script type="text/javascript" src="resource.js"></script>
     
         
     <link rel="stylesheet" href="zoro/css/reset.css" >
+    <link rel="stylesheet" href="zoro/css/jplayer.pink.flag.css">
+    <link rel="stylesheet" href="zoro/css/prettify-jPlayer.css">
     <style>
         h1{
             margin: 5px 5px;
@@ -19,23 +25,31 @@
             margin: 5px 5px;
             cursor: pointer;
         }
+        
+        a.music{
+            margin: 5px 5px 5px 20px
+        }
         /*#video {display:block; margin:0 auto; padding: 5px 5px;}*/
     </style>
 </head>
 <body>
     <script type="text/javascript">
         var VIEW_WINDOW = undefined;
+        var player;
         $(window).ready(function(){
-//            var view = localStorage.getItem("view_window");
-//            if( !view ){
-//                VIEW_WINDOW =  window.open('view.html');
-//                VIEW_WINDOW.show();
-//            } else{
-//                VIEW_WINDOW = view;
-//            }
-
-            VIEW_WINDOW = window.open('view.html');
+            
             images();
+            music();
+            
+           
+            var view = sessionStorage.getItem("view_window");
+            if( !view ){
+                VIEW_WINDOW =  window.open('view.html');
+                sessionStorage.setItem("view_window",VIEW_WINDOW);
+//                VIEW_WINDOW.show();
+            } else{
+                VIEW_WINDOW = view;
+            }
         });
 
         function images(){
@@ -52,7 +66,7 @@
                         alt:    image.name,
                         src:    image.src,                    
                         width:  region.width,
-                        height: region.height,
+                        height: region.height
                     }).       
                     data('src',image).                    
                     click(function(){
@@ -70,16 +84,97 @@
                             height: size.height                    
                         });                      
                     });
+                $('div#images').append(img);
             }            
         }
 
+        function music(){
+            
+            if( !RESOURCE.music) return;            
+            
+            var play = [];
+            
+            for(var i = 0; i < RESOURCE.music.length; ++i){
+                var music = RESOURCE.music[i];
+                play.push({
+                    title: music.name,
+                    mp3: music.src
+                });
+            } 
+            
+            new jPlayerPlaylist({
+		jPlayer: "#jplayer",
+		cssSelectorAncestor: "#jp_container"
+            }, 
+            play,{
+                swfPath: "zoro/js/jplayer",
+                supplied: "mp3",
+                wmode: "window",
+                smoothPlayBar: true,
+                keyEnabled: true
+            });
 
-//        globalStorage['developer.mozilla.org'].setItem("username", "John");
-
+       }
+       
     </script>
     
     <h1>Лики Владык</h1>
     <div id="images"></div>
 
+    <h1>Музыка</h1>
+    <div id="music">
+        <div id="jplayer" class="jp-jplayer"></div>
+        <div id="jp_container" class="jp-audio">
+            <div class="jp-type-playlist">
+                <div class="jp-gui jp-interface">
+                    <ul class="jp-controls">
+                        <li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
+                        <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+                        <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+                        <li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
+                        <li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+                        <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+                        <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+                        <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+                    </ul>
+                    <div class="jp-progress">
+                        <div class="jp-seek-bar">
+                            <div class="jp-play-bar"></div>
+
+                        </div>
+                    </div>
+                    <div class="jp-volume-bar">
+                        <div class="jp-volume-bar-value"></div>
+                    </div>
+                    <div class="jp-current-time"></div>
+                    <div class="jp-duration"></div>
+                    <ul class="jp-toggles">
+                        <li><a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a></li>
+                        <li><a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a></li>
+                        <li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+                        <li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+                    </ul>
+                </div>
+                <div class="jp-playlist">
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="jp-no-solution">
+                    <span>Update Required</span>
+                    To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h1>Фильмы</h1>
+    <div id="video"></div>
+    
+<!--    <audio controls="controls" src="music/Beautiful song.mp3">
+        Если вы читаете это, значит ваш браузер не
+        поддерживает теги HTML5 аудио.
+    </audio>-->
+    
 </body>
 </html>

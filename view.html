@@ -3,9 +3,11 @@
 <head>
     <title></title>
     <meta charset="utf-8">
-    <link href="zoro/lib/video-js/video-js.css" rel="stylesheet">
-    <script type="text/javascript" src="zoro/lib/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="zoro/lib/video-js/video.js"></script>
+    <link rel="stylesheet" href="zoro/css/reset.css" >
+    <link rel="stylesheet" href="zoro/js/video-js/video-js.css" >
+    <script type="text/javascript" src="zoro/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="zoro/js/video-js/video.js"></script>
+    <script type="text/javascript" src="zoro/js/utils.js"></script>
     <script type="text/javascript">
 //        $(window).ready(function(){
 //            var view = localStorage.getItem("view_window");
@@ -16,43 +18,36 @@
 //                localStorage.setItem("view_window",window);
 //            }
 //        });
-        videojs.options.flash.swf = "z-index/lib/video-js/video-js.swf";
+        videojs.options.flash.swf = "zoro/js/video-js/video-js.swf";
 
         $(window).load(resize);
         $(window).resize(resize);
 
-//        $(window).bind('unbound', function(){
-//            localStorage.setItem("view_window",null);
-//            alert("I'am");
-//            this.open();
-//            this.location('yandex.ru')
-            //переход на старницу напишешь сам :)
-//        });
 
         function resize(){
             var img = $('#image')[0];
+            var size = scale({
+                width : img.naturalWidth, 
+                height : img.naturalHeight
+            },{
+                width : $(window).width(), 
+                height : $(window).height()                
+            });
 
-            var scaleX =$(window).width() / img.width;
-            var scaleY = $(window).height() / img.height;
-            if( scaleX > scaleY){
-                img.width = img.width * scaleY;
-                img.height =  body.clientHeight;
-            }else{
-                img.width = body.clientWidth;
-                img.height =  img.height * scaleX;
-            }
+            img.width = size.width;
+            img.height = size.height;
         }
 
     </script>
     <style>
         /*body {background: black;}*/
-        #image {display:block; margin:0 auto; padding: 5px 5px;}
+        #image {display:block; margin:0 auto; }
         #video {display:block; margin:0 auto; padding: 5px 5px;}
     </style>
 </head>
 <body>
 
-    <img id="image" alt="Лики Владык" src="image/Гаутама Будда.jpg"/>
+    <img id="image" alt="Лики Владык" src="image/Гаутама%20Будда.jpg"/>
 
 <!--    <video id="video" class="video-js vjs-default-skin"
            controls preload="auto" width="640" height="264"

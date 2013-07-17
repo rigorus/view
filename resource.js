@@ -12,12 +12,12 @@ var RESOURCE = {
         {name: 'Эль Мория', src: 'image/Эль Мория.jpg'}
     ],
     video: [
-        {name: 'Первое интервью', src: '../video/Первое интервью.webm'}
+        {name: 'Первое интервью', src: 'video/Первое интервью.webm'}
     ],
     music: [
-        {name: 'Sa Re Sa Sa', src: '../music/Sa Re Sa Sa.mp3'},
-        {name: 'Abardas', src: '../music/Abardas.mp3'},
-        {name: 'Kunrig', src: '../music/Kunrig.mp3'},
-        {name: 'Kunrig', src: 'Om mani padme hum.mp3'}
+        {name: 'Sa Re Sa Sa', src: 'music/Sa Re Sa Sa.mp3'},
+        {name: 'Абардас', src: 'music/Abardas.mp3'},
+        {name: 'Kunrig', src: 'music/Kunrig.mp3'},
+        {name: 'Ом Мани Падме Хум', src: 'music/Om mani padme hum.mp3'}
     ]
 };
