@@ -632,6 +632,9 @@ div.jp-video-play:hover a.jp-video-play-icon {
 	background: url("jplayer.pink.flag.video.play.png") 0 -100px no-repeat;
 }
 
+div.jp-video-play, a.jp-video-play-icon, div.jp-jplayer{
+    display: none;
+}
 
 div.jp-jplayer audio,
 div.jp-jplayer {

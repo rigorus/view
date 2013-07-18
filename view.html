@@ -18,9 +18,13 @@
 //                localStorage.setItem("view_window",window);
 //            }
 //        });
-        videojs.options.flash.swf = "zoro/js/video-js/video-js.swf";
 
-        $(window).load(resize);
+        $(window).load(function(){
+            document.body.style.overflow = 'hidden';
+            opener.video();
+            resize();
+        });
+        
         $(window).resize(resize);
 
 
@@ -35,27 +39,31 @@
             });
 
             img.width = size.width;
-            img.height = size.height;
+            img.height = size.height;           
+            
+            var video = $('video')[0];
+            size = scale({
+                width : video.videoWidth, 
+                height : video.videoHeight
+            },{
+                width : $(window).width(), 
+                height : $(window).height()                
+            });
+            
+            video.width = size.width;
+            video.height = size.height;
         }
 
     </script>
     <style>
         /*body {background: black;}*/
         #image {display:block; margin:0 auto; }
-        #video {display:block; margin:0 auto; padding: 5px 5px;}
+        #screen {display:block; margin:0 auto; }
     </style>
 </head>
 <body>
 
-    <img id="image" alt="Лики Владык" src="image/Гаутама%20Будда.jpg"/>
-
-<!--    <video id="video" class="video-js vjs-default-skin"
-           controls preload="auto" width="640" height="264"
-           poster="video-js/oceans-clip.png"
-           data-setup='{"example_option":true}'>
-        <source src="video/Первое интервью_cut_2.webm" type='video/webm'/>
-        <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
-        <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
-    </video>-->
+    <img id="image" alt="Лики Владык" src="image/Гаутама%20Будда.jpg" style="display: none;"/>
+    <video id="screen"></video>
 </body>
 </html>

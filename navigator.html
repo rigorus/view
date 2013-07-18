@@ -4,8 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" src="zoro/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="zoro/js/audiojs/audio.min.js"></script>
-    <script type="text/javascript" src="zoro/js/jplayer/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="zoro/js/jplayer/add-on/jplayer.playlist.min.js"></script>
+    <script type="text/javascript" src="zoro/js/jplayer/jquery.jplayer.js"></script>
+    <script type="text/javascript" src="zoro/js/jplayer/add-on/jplayer.playlist.js"></script>
     <script type="text/javascript" src="zoro/js/jplayer/add-on/prettify-jPlayer.js"></script>
     <script type="text/javascript" src="zoro/js/utils.js"></script>
     <script type="text/javascript" src="resource.js"></script>
@@ -37,11 +37,7 @@
         var VIEW_WINDOW = undefined;
         var player;
         $(window).ready(function(){
-            
-            images();
-            music();
-            
-           
+
             var view = sessionStorage.getItem("view_window");
             if( !view ){
                 VIEW_WINDOW =  window.open('view.html');
@@ -49,6 +45,11 @@
             } else{
                 VIEW_WINDOW = view;
             }
+            
+            
+            images();
+            music();
+//            $(VIEW_WINDOW).ready(function(){ video(); });
         });
 
         function images(){
@@ -103,8 +104,8 @@
             } 
             
             new jPlayerPlaylist({
-		jPlayer: "#jplayer",
-		cssSelectorAncestor: "#jp_container"
+		jPlayer: "#jplayer_audio",
+		cssSelectorAncestor: "#jp_container_audio"
             }, 
             playlist,{
                 swfPath: "zoro/js/jplayer",
@@ -116,6 +117,34 @@
 
        }
        
+        function video(){
+            
+            if( !RESOURCE.music) return;            
+            
+            var playlist = [];
+            
+            for(var i = 0; i < RESOURCE.video.length; ++i){
+                var video = RESOURCE.video[i];
+                playlist.push({
+                    title: video.name,
+                    free:true,
+                    webmv: video.src
+                });
+            } 
+           	
+            new jPlayerPlaylist({
+		jPlayer: "#jquery_jplayer",
+		cssSelectorAncestor: "#jp_container_video"
+            },playlist , {
+		swfPath: "../js",
+		supplied: "webmv, ogv, m4v",
+		smoothPlayBar: true,
+		keyEnabled: true
+            });
+            
+            $('div.jp-video-play').hide();
+       }
+       
     </script>
     
     <h1>Лики Владык</h1>
@@ -123,8 +152,8 @@
 
     <h1>Музыка</h1>
     <div id="music">
-        <div id="jplayer" class="jp-jplayer"></div>
-        <div id="jp_container" class="jp-audio">
+        <div id="jplayer_audio" class="jp-jplayer"></div>
+        <div id="jp_container_audio" class="jp-audio">
             <div class="jp-type-playlist">
                 <div class="jp-gui jp-interface">
                     <ul class="jp-controls">
@@ -169,12 +198,66 @@
     </div>
     
     <h1>Фильмы</h1>
-    <div id="video"></div>
+    <div id="video">
+        <div id="jp_container_video" class="jp-video jp-video-270p">
+            <div class="jp-type-playlist">
+                <div id="jquery_jplayer" class="jp-jplayer"></div>
+                <div class="jp-gui">
+                    <div class="jp-video-play">
+                        <a href="javascript:;" class="jp-video-play-icon" tabindex="1">play</a>
+                    </div>
+                    <div class="jp-interface">
+                        <div class="jp-progress">
+                            <div class="jp-seek-bar">
+                                <div class="jp-play-bar"></div>
+                            </div>
+                        </div>
+                        <div class="jp-current-time"></div>
+                        <div class="jp-duration"></div>
+                        <div class="jp-title">
+                            <ul>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <div class="jp-controls-holder">
+                            <ul class="jp-controls">
+                                <li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
+                                <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+                                <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+                                <li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
+                                <li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+                                <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+                                <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+                                <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+                            </ul>
+                            <div class="jp-volume-bar">
+                                <div class="jp-volume-bar-value"></div>
+                            </div>
+                            <ul class="jp-toggles">
+                                <li><a href="javascript:;" class="jp-full-screen" tabindex="1" title="full screen">full screen</a></li>
+                                <li><a href="javascript:;" class="jp-restore-screen" tabindex="1" title="restore screen">restore screen</a></li>
+                                <li><a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a></li>
+                                <li><a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a></li>
+                                <li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+                                <li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="jp-playlist">
+                    <ul>
+                        <!-- The method Playlist.displayPlaylist() uses this unordered list -->
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="jp-no-solution">
+                    <span>Update Required</span>
+                    To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+                </div>
+            </div>
+        </div>
+    </div>
     
-<!--    <audio controls="controls" src="music/Beautiful song.mp3">
-        Если вы читаете это, значит ваш браузер не
-        поддерживает теги HTML5 аудио.
-    </audio>-->
     
 </body>
 </html>
